@@ -1,0 +1,4 @@
+.ruby-gemset
+.rspec
+tmp/
+log/

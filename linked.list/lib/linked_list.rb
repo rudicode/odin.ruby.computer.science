@@ -53,6 +53,7 @@ class LinkedList
   end
 
   def at(index)
+    # returns the node at index
     return nil if index > @size-1 || index < 0
     return @head if index == 0
     count = 0
@@ -113,6 +114,17 @@ class LinkedList
     end
     @size -= 1
     node_to_remove
+  end
+
+  def insert_at(value, index)
+    # inserts new node at given index
+    return nil if index > @size-1 || index < 0
+    return prepend(value) if index == 0
+    before_node = at(index-1)
+    after_node = at(index)
+    before_node.next_node = Node.new(value, after_node)
+    @size += 1
+    return before_node.next_node
   end
 
 end

@@ -99,6 +99,8 @@ RSpec.configure do |config|
 =end
 end
 
+
+# Added this formatter override to suppress printing of 'pending' examples
 module FormatterOverrides
   def example_pending(_)
   end
@@ -108,3 +110,4 @@ module FormatterOverrides
 end
 
 RSpec::Core::Formatters::DocumentationFormatter.prepend FormatterOverrides
+# end formatter overrides

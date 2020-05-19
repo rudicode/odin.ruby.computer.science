@@ -18,10 +18,14 @@ RSpec.describe LinkedList do
   end
 
   describe '#append' do
-    xit'adds new node containing value to end of list' do
-      #
+    it'adds new node containing value to end of list' do
+      @list.append("A")
+      expect(@list.tail.value).to eq('A')
     end
-    xit'size increases by 1'
+    it'size increases by 1' do
+      expect{@list.append("A")}.to change { @list.size }.by(1)
+    end
+
   end
 
   describe'#head' do

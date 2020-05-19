@@ -1,16 +1,16 @@
 require "node"
 
 RSpec.describe Node do
-  before(:example) do
-    @node = Node.new()
-  end
 
   describe '#initialize' do
-    it 'sets @value to nil' do
-      expect(@node.value).to be_nil
+    before(:example) do
+      @node = Node.new("value", 1)
     end
-    it 'sets @next_node to nil' do
-      expect(@node.next_node).to be_nil
+    it 'sets @value to value' do
+      expect(@node.value).to eq("value")
+    end
+    it 'sets @next_node to next_node' do
+      expect(@node.next_node).to eq(1)
     end
   end
 end

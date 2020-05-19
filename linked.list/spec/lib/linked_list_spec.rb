@@ -56,14 +56,17 @@ RSpec.describe LinkedList do
   end
 
   describe'#tail' do
-    it'returns nil if nothing was added yet.'do
+    it 'returns nil if nothing was added yet.' do
       expect(@list.tail).to be_nil
     end
-    xit'returns the last node on the list.'
+    it 'returns the last node on the list.' do
+      last_node_added = @list.append(123)
+      expect(@list.tail).to eq(last_node_added)
+    end
   end
 
-  describe'#at'do
-    it'returns value at index location'do
+  describe '#at' do
+    it 'returns value at index location' do
       node55 = @list.append(55)
       @list.append(40)
       @list.append(22)
@@ -76,8 +79,8 @@ RSpec.describe LinkedList do
     end
   end
 
-  describe'#contains?'do
-    it'returns true if a value is in the list'do
+  describe '#contains?' do
+    it 'returns true if a value is in the list' do
     @list.append(55)
     @list.append(40)
     @list.append(22)
@@ -88,7 +91,7 @@ RSpec.describe LinkedList do
     expect(@list.contains?([[1,2],3,4,5])).to be_truthy
     end
 
-    it'returns false if a value is not in the list'do
+    it 'returns false if a value is not in the list' do
     @list.append(55)
     @list.append(40)
     @list.append(22)
@@ -101,7 +104,7 @@ RSpec.describe LinkedList do
   end
 
   describe'#find'do
-    it'returns index of value or nil'do
+    it 'returns index of value or nil' do
     @list.append(55)
     @list.append(40)
     @list.append(22)
@@ -117,16 +120,50 @@ RSpec.describe LinkedList do
   describe '#to_s' do
     it 'returns a string with all nodes, formated' do
       expect(@list.to_s).to eq("nil")
+
       @list.append(55)
       expect(@list.to_s).to eq("( 55 ) -> nil")
+
       @list.append(40)
       expect(@list.to_s).to eq("( 55 ) -> ( 40 ) -> nil")
+
       @list.append(22)
       expect(@list.to_s).to eq("( 55 ) -> ( 40 ) -> ( 22 ) -> nil")
+
       @list.append([1,2,3,4])
       expect(@list.to_s).to eq("( 55 ) -> ( 40 ) -> ( 22 ) -> ( [1, 2, 3, 4] ) -> nil")
+
       @list.append("test string")
       expect(@list.to_s).to eq("( 55 ) -> ( 40 ) -> ( 22 ) -> ( [1, 2, 3, 4] ) -> ( test string ) -> nil")
     end
   end
+  describe '#pop' do
+    it 'removes the last node from the list' do
+      first_node   = @list.append(55)
+      second_node  = @list.append(40)
+      third_node   = @list.append(22)
+
+      removed_node = @list.pop
+      expect(@list.tail).to eq(second_node)
+
+      removed_node = @list.pop
+      expect(@list.tail).to eq(first_node)
+
+      removed_node = @list.pop
+      expect(@list.tail).to be_nil
+      expect(@list.head).to be_nil
+
+      another_node = @list.append(44)
+      removed_node = @list.pop
+      expect(@list.tail).to be_nil
+      expect(@list.head).to be_nil
+    end
+    it 'decreases @size by 1' do
+      @list.append(55)
+      @list.append(40)
+      @list.append(22)
+      expect{@list.pop()}.to change { @list.size }.by(-1)
+    end
+  end
+
 end

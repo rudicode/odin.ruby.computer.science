@@ -95,4 +95,24 @@ class LinkedList
     result.join(" -> ")
   end
 
+  def pop
+    # removes last node from list and returns it.
+    return nil unless @head # no nodes
+    node_to_remove = @tail
+
+    if @tail == @head # only one node
+      @tail = nil
+      @head = nil
+    else
+      second_last_node = @head
+      while second_last_node.next_node != @tail
+        second_last_node = second_last_node.next_node
+      end
+      second_last_node.next_node = nil
+      @tail = second_last_node
+    end
+    @size -= 1
+    node_to_remove
+  end
+
 end

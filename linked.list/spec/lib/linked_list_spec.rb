@@ -90,6 +90,9 @@ RSpec.describe LinkedList do
   end
 
   describe '#count_nodes' do
+    it'empty list' do
+      expect(@list.count_nodes).to eq(0)
+    end
     it'traverses the list counting each node.' do
       @list.append("A")
       @list.append("B")
@@ -214,16 +217,20 @@ RSpec.describe LinkedList do
       expect(@list.tail).to be_nil
       expect(@list.head).to be_nil
 
-      another_node = @list.append(44)
-      removed_node = @list.pop
-      expect(@list.tail).to be_nil
-      expect(@list.head).to be_nil
     end
     it 'decreases @size by 1' do
       @list.append(55)
       @list.append(40)
       @list.append(22)
       expect{@list.pop()}.to change { @list.size }.by(-1)
+    end
+    it 'removes last node onlist' do
+      another_node = @list.append(44)
+      removed_node = @list.pop
+      expect(@list.tail).to be_nil
+      expect(@list.head).to be_nil
+      expect(@list.size).to eq(0)
+      expect(@list.count_nodes).to eq(0)
     end
   end
 
@@ -235,12 +242,14 @@ RSpec.describe LinkedList do
         third_node   = @list.append(33)
         removed_node = @list.remove_at(1)
         expect(removed_node).to eq(second_node)
+        expect(@list.at(0)).to eq(first_node)
+        expect(@list.at(1)).to eq(third_node)
       end
       it 'decreases @size by 1' do
         @list.append(55)
         @list.append(40)
         @list.append(22)
-        expect{@list.remove_at(1)}.to change { @list.size }.by(-1)
+        expect{@list.remove_at(0)}.to change { @list.size }.by(-1)
       end
     end
     context 'invalid index' do

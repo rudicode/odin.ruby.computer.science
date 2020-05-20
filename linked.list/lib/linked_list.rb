@@ -117,19 +117,25 @@ class LinkedList
     return nil if index >= @size || index < 0
     node_to_remove = at(index)
 
-    if @tail == @head # only one node
+    if @tail == @head # only one node to remove
       @tail = nil
       @head = nil
+    elsif index == 0
+      # remove head node
+      @head = at(1)
+    elsif index == @size-1
+      # remove tail node
+      @tail = at(index-1)
+      @tail.next_node = nil
     else
-      second_last_node = @head
-      while second_last_node.next_node != node_to_remove
-        second_last_node = second_last_node.next_node
-      end
-      second_last_node.next_node = nil
-      @tail = second_last_node
+      # remove a node somwhere between head and tail
+      previous_node = at(index-1)
+      previous_node.next_node = at(index+1)
     end
     @size -= 1
     node_to_remove
   end
+
+
 
 end

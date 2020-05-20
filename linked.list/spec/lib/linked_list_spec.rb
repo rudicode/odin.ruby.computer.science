@@ -236,6 +236,31 @@ RSpec.describe LinkedList do
         removed_node = @list.remove_at(1)
         expect(removed_node).to eq(second_node)
       end
+      it 'decreases @size by 1' do
+        @list.append(55)
+        @list.append(40)
+        @list.append(22)
+        expect{@list.remove_at(1)}.to change { @list.size }.by(-1)
+      end
+    end
+    context 'invalid index' do
+      it 'does not remove any nodes' do
+        first_node   = @list.append(11)
+        second_node  = @list.append(22)
+        third_node   = @list.append(33)
+        removed_node = @list.remove_at(3)
+        expect(@list.at(0)).to eq(first_node)
+        expect(@list.at(1)).to eq(second_node)
+        expect(@list.at(2)).to eq(third_node)
+      end
+      it 'does not change @size' do
+        @list.append(55)
+        @list.append(40)
+        @list.append(22)
+        expect(@list.size).to eq(3)
+        expect{@list.remove_at(3)}.to change { @list.size }.by(0)
+        expect{@list.remove_at(-1)}.to change { @list.size }.by(0)
+      end
     end
   end
 

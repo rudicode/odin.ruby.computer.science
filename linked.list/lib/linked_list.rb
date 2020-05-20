@@ -114,6 +114,7 @@ class LinkedList
   def remove_at(index)
     # removes node at index
     return nil unless @head # no nodes
+    return nil if index >= @size || index < 0
     node_to_remove = at(index)
 
     if @tail == @head # only one node

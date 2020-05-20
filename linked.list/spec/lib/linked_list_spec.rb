@@ -37,6 +37,58 @@ RSpec.describe LinkedList do
     end
   end
 
+  describe '#insert_at' do
+    it 'inserts node at index 0' do
+      first_node   = @list.append(55)
+      second_node  = @list.append(40)
+      third_node   = @list.append(22)
+      at_index_0   = @list.insert_at(88,0)
+      expect(@list.head).to eq(at_index_0)
+      expect(@list.head.next_node).to eq(first_node)
+    end
+    it 'inserts node at index 1' do
+      first_node   = @list.append(55)
+      second_node  = @list.append(40)
+      third_node   = @list.append(22)
+      at_index_1   = @list.insert_at(99,1)
+      expect(@list.head).to eq(first_node)
+      expect(@list.head.next_node).to eq(at_index_1)
+      expect(at_index_1.next_node).to eq(second_node)
+    end
+    it 'inserts node at last index' do
+      first_node   = @list.append(55)
+      second_node  = @list.append(40)
+      third_node   = @list.append(22)
+      at_index_last   = @list.insert_at(77,2)
+      expect(at_index_last).to eq(second_node.next_node)
+      expect(at_index_last.next_node).to eq(third_node)
+    end
+    it 'increases @size by 1' do
+      @list.append(55)
+      @list.append(65)
+      @list.append(75)
+      expect{@list.insert_at(59,1)}.to change { @list.size }.by(1)
+
+    end
+    context 'empty node list' do
+      it 'inserts node at head' do
+        at_index_0   = @list.insert_at(77,0)
+        expect(@list.head).to eq(at_index_0)
+      end
+    end
+
+    context 'invalid index' do
+
+      it 'returns nil if index is invalid' do
+        first_node   = @list.append(55)
+        second_node  = @list.append(40)
+        third_node   = @list.append(22)
+        expect(@list.insert_at(77,-1)).to be_nil
+        expect(@list.insert_at(77,3)).to be_nil
+      end
+    end
+  end
+
   describe '#count_nodes' do
     it'traverses the list counting each node.' do
       @list.append("A")
@@ -175,57 +227,16 @@ RSpec.describe LinkedList do
     end
   end
 
-  describe '#insert_at' do
-    it 'inserts node at index 0' do
-      first_node   = @list.append(55)
-      second_node  = @list.append(40)
-      third_node   = @list.append(22)
-      at_index_0   = @list.insert_at(88,0)
-      expect(@list.head).to eq(at_index_0)
-      expect(@list.head.next_node).to eq(first_node)
-    end
-    it 'inserts node at index 1' do
-      first_node   = @list.append(55)
-      second_node  = @list.append(40)
-      third_node   = @list.append(22)
-      at_index_1   = @list.insert_at(99,1)
-      expect(@list.head).to eq(first_node)
-      expect(@list.head.next_node).to eq(at_index_1)
-      expect(at_index_1.next_node).to eq(second_node)
-    end
-    it 'inserts node at last index' do
-      first_node   = @list.append(55)
-      second_node  = @list.append(40)
-      third_node   = @list.append(22)
-      at_index_last   = @list.insert_at(77,2)
-      expect(at_index_last).to eq(second_node.next_node)
-      expect(at_index_last.next_node).to eq(third_node)
-    end
-    it 'increases @size by 1' do
-      @list.append(55)
-      @list.append(65)
-      @list.append(75)
-      expect{@list.insert_at(59,1)}.to change { @list.size }.by(1)
-
-    end
-    context 'empty node list' do
-      it 'inserts node at head' do
-        at_index_0   = @list.insert_at(77,0)
-        expect(@list.head).to eq(at_index_0)
+  describe '#remove_at' do
+    context 'valid cases' do
+      it 'removes node at index' do
+        first_node   = @list.append(11)
+        second_node  = @list.append(22)
+        third_node   = @list.append(33)
+        removed_node = @list.remove_at(1)
+        expect(removed_node).to eq(second_node)
       end
     end
-
-    context 'invalid index' do
-
-      it 'returns nil if index is invalid' do
-        first_node   = @list.append(55)
-        second_node  = @list.append(40)
-        third_node   = @list.append(22)
-        expect(@list.insert_at(77,-1)).to be_nil
-        expect(@list.insert_at(77,3)).to be_nil
-      end
-  end
-
   end
 
 end

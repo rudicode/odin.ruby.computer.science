@@ -1,4 +1,3 @@
-require 'pry'
 require './lib/node'
 
 class LinkedList
@@ -37,6 +36,17 @@ class LinkedList
     end
     @size += 1
     @head # return the object created
+  end
+
+  def insert_at(value, index)
+    # inserts new node at given index
+    return nil if index > @size-1 || index < 0
+    return prepend(value) if index == 0
+    before_node = at(index-1)
+    after_node = at(index)
+    before_node.next_node = Node.new(value, after_node)
+    @size += 1
+    return before_node.next_node
   end
 
   def count_nodes
@@ -98,15 +108,20 @@ class LinkedList
 
   def pop
     # removes last node from list and returns it.
+    remove_at(@size-1)
+  end
+
+  def remove_at(index)
+    # removes node at index
     return nil unless @head # no nodes
-    node_to_remove = @tail
+    node_to_remove = at(index)
 
     if @tail == @head # only one node
       @tail = nil
       @head = nil
     else
       second_last_node = @head
-      while second_last_node.next_node != @tail
+      while second_last_node.next_node != node_to_remove
         second_last_node = second_last_node.next_node
       end
       second_last_node.next_node = nil
@@ -114,17 +129,6 @@ class LinkedList
     end
     @size -= 1
     node_to_remove
-  end
-
-  def insert_at(value, index)
-    # inserts new node at given index
-    return nil if index > @size-1 || index < 0
-    return prepend(value) if index == 0
-    before_node = at(index-1)
-    after_node = at(index)
-    before_node.next_node = Node.new(value, after_node)
-    @size += 1
-    return before_node.next_node
   end
 
 end
